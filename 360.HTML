@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>360 Photo with Three.js</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Inisialisasi scene, kamera, dan renderer
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Memuat texture 360
+        var loader = new THREE.TextureLoader();
+        loader.load(E:\2024_UMUM\EMBED 360\IMG_20221204_094822_00_088.jpg, function (texture) {
+            var sphereGeometry = new THREE.SphereGeometry(500, 60, 40);
+            sphereGeometry.scale(-1, 1, 1);  // Membalikkan sphere agar dapat melihat bagian dalam
+            var sphereMaterial = new THREE.MeshBasicMaterial({
+                map: texture
+            });
+            var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            scene.add(sphere);
+        });
+
+        // Posisi kamera
+        camera.position.set(0, 0, 0.1);
+
+        // Kontrol untuk rotasi kamera (opsional)
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
